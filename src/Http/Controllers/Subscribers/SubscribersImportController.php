@@ -104,11 +104,11 @@ class SubscribersImportController extends Controller
             'updated' => 0
         ];
 
-        PartimUser::all()->each(function (array $line) use (&$counter) {
+        PartimUser::all()->each(function ($line) use (&$counter) {
             $line = [
                 'id' => '',
-                'email' => $line['email'],
-                'first_name' => $line['name'],
+                'email' => $line->email,
+                'first_name' => $line->name,
                 'last_name' => '',
             ];
 
