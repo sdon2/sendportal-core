@@ -53,6 +53,9 @@
                     <a href="{{ route('sendportal.subscribers.import') }}" class="dropdown-item">
                         <i class="fa fa-upload color-gray-400 mr-2"></i> {{ __('Import Subscribers') }}
                     </a>
+                    <a href="{{ route('sendportal.subscribers.partim.import') }}" class="dropdown-item">
+                        <i class="fa fa-upload color-gray-400 mr-2"></i> {{ __('Import From PARTIM.IN') }}
+                    </a>
                     <a href="{{ route('sendportal.subscribers.export') }}" class="dropdown-item">
                         <i class="fa fa-download color-gray-400 mr-2"></i> {{ __('Export Subscribers') }}
                     </a>
