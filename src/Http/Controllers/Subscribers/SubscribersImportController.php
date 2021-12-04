@@ -18,6 +18,7 @@ use Rap2hpoutre\FastExcel\FastExcel;
 use Sendportal\Base\Facades\Sendportal;
 use Sendportal\Base\Http\Controllers\Controller;
 use Sendportal\Base\Http\Requests\SubscribersImportRequest;
+use Sendportal\Base\Models\PartimUser;
 use Sendportal\Base\Repositories\TagTenantRepository;
 use Sendportal\Base\Services\Subscribers\ImportSubscriberService;
 
@@ -94,6 +95,41 @@ class SubscribersImportController extends Controller
 
         return redirect()->route('sendportal.subscribers.index')
             ->with('errors', __('The uploaded file is not valid'));
+    }
+
+    public function partimImport()
+    {
+        $counter = [
+            'created' => 0,
+            'updated' => 0
+        ];
+
+        PartimUser::all()->each(function (array $line) use (&$counter) {
+            $line = [
+                'id' => '',
+                'email' => $line['email'],
+                'first_name' => $line['name'],
+                'last_name' => '',
+            ];
+
+            $data = Arr::only($line, ['id', 'email', 'first_name', 'last_name']);
+
+            $data['tags'] = [];
+            $subscriber = $this->subscriberService->import(Sendportal::currentWorkspaceId(), $data);
+
+            if ($subscriber->wasRecentlyCreated) {
+                $counter['created']++;
+            } else {
+                $counter['updated']++;
+            }
+        });
+
+        return redirect()->route('sendportal.subscribers.index')
+            ->with('success', __('Imported :created subscriber(s) and updated :updated subscriber(s) out of :total', [
+                'created' => $counter['created'],
+                'updated' => $counter['updated'],
+                'total' => $counter['created'] + $counter['updated']
+            ]));
     }
 
     /**

@@ -27,6 +27,14 @@
     @endif
 
     @component('sendportal::layouts.partials.card')
+        @slot('cardHeader', __('Import from PARTIM.IN'))
+
+        @slot('cardBody')
+            <a href="{{ route('sendportal.subscribers.partim.import') }}" class="btn btn-primary">Import from PARTIM.IN</a>
+        @endSlot
+    @endcomponent
+
+    @component('sendportal::layouts.partials.card')
         @slot('cardHeader', __('Import via CSV file'))
 
         @slot('cardBody')

@@ -126,6 +126,7 @@ class WebRoutes
                     $subscriberRouter->get('export', 'SubscribersController@export')->name('export');
                     $subscriberRouter->get('import', 'SubscribersImportController@show')->name('import');
                     $subscriberRouter->post('import', 'SubscribersImportController@store')->name('import.store');
+                    $subscriberRouter->get('partim/import', 'SubscribersImportController@partimImport')->name('partim.import');
                 });
                 $appRouter->resource('subscribers', 'Subscribers\SubscribersController');
 
